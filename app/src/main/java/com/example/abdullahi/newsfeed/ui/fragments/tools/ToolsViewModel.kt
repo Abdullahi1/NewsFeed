@@ -1,4 +1,4 @@
-package com.example.abdullahi.newsfeed.ui.tools
+package com.example.abdullahi.newsfeed.ui.fragments.tools
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

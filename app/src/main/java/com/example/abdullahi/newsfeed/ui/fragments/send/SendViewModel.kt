@@ -1,13 +1,13 @@
-package com.example.abdullahi.newsfeed.ui.share
+package com.example.abdullahi.newsfeed.ui.fragments.send
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ShareViewModel : ViewModel() {
+class SendViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is share Fragment"
+        value = "This is send Fragment"
     }
     val text: LiveData<String> = _text
 }
