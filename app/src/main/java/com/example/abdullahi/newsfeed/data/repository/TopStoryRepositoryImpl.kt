@@ -4,10 +4,14 @@ import androidx.lifecycle.LiveData
 import com.example.abdullahi.newsfeed.data.dao.TopStoryDao
 import com.example.abdullahi.newsfeed.data.network.datasource.FeedDataSource
 import com.example.abdullahi.newsfeed.data.network.response.TopStoryResponse
+import com.example.abdullahi.newsfeed.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jsoup.Jsoup
+
+
 
 class TopStoryRepositoryImpl(
     private val topStoryDao: TopStoryDao,
@@ -26,7 +30,16 @@ class TopStoryRepositoryImpl(
         GlobalScope.launch (Dispatchers.IO){
             val newFeedId = getId(topStoryResponse!!.section)
             topStoryResponse.id = newFeedId
+            //insertContent(topStoryResponse!!.results)
             topStoryDao.insert(topStoryResponse)
+        }
+    }
+
+    private fun insertContent(results: List<Result>) {
+        results.forEach {
+            val doc = Jsoup.connect(it.url).get()
+            val newsContent = doc.body().text()
+            it.content = newsContent
         }
     }
 

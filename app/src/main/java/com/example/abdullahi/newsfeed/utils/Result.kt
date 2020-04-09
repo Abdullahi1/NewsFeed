@@ -32,5 +32,6 @@ data class Result(
     @SerializedName("updated_date")
     val updatedDate: String,
     val uri: String,
-    val url: String
+    val url: String,
+    var content : String
 )

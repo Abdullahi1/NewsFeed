@@ -10,7 +10,7 @@ import com.example.abdullahi.newsfeed.data.db.converter.ResultListConverter
 import com.example.abdullahi.newsfeed.data.db.converter.StringListConverter
 import com.example.abdullahi.newsfeed.data.network.response.TopStoryResponse
 
-@Database(entities = [TopStoryResponse::class], version = 1)
+@Database(entities = [TopStoryResponse::class], version = 1, exportSchema = false)
 @TypeConverters(StringListConverter::class, MultimediaListConverter::class, ResultListConverter::class)
 abstract class NewsFeedDatabase : RoomDatabase() {
 
