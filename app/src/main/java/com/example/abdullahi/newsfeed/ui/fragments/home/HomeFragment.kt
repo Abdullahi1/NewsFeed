@@ -4,44 +4,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
 import com.example.abdullahi.newsfeed.R
 import com.example.abdullahi.newsfeed.data.NewsFeedApiService
 import com.example.abdullahi.newsfeed.data.dao.NewsFeedDatabase
 import com.example.abdullahi.newsfeed.data.network.datasource.FeedDataSourceImpl
-import com.example.abdullahi.newsfeed.data.network.interceptor.ConnectivityInterceptor
 import com.example.abdullahi.newsfeed.data.network.interceptor.ConnectivityInterceptorImpl
 import com.example.abdullahi.newsfeed.data.repository.TopStoryRepositoryImpl
+import com.example.abdullahi.newsfeed.ui.adapters.FeedResultRecyclerAdapter
 import com.example.abdullahi.newsfeed.ui.base.ScopedFragment
-import com.example.abdullahi.newsfeed.utils.Result
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
+import com.example.abdullahi.newsfeed.ui.fragments.feedsection.FeedViewModel
+import com.example.abdullahi.newsfeed.ui.fragments.feedsection.FeedViewModelFactory
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.Collections.addAll
 
 class HomeFragment : ScopedFragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private lateinit var recyclerAdapter : FeedResultRecyclerAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        homeViewModel =
-//            ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-//        val textView: TextView = root.findViewById(R.id.text_home)
-//        homeViewModel.text.observe(this, Observer {
+//        feedViewModel =
+//            ViewModelProviders.of(this).get(FeedViewModel::class.java)
+//                val textView: TextView = root.findViewById(R.id.text_home)
+//        feedViewModel.text.observe(this, Observer {
 //            //textView.text = it
 //        })
 //
@@ -55,41 +46,19 @@ class HomeFragment : ScopedFragment() {
 //            textView.text = response.toString()
 //
 //        }
-       return root
+       return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-            recyclerAdapter = FeedResultRecyclerAdapter(listOf(),context!!)
-            recyclerView.layoutManager = LinearLayoutManager(context!!)
-            recyclerView.adapter = recyclerAdapter
-            val connectivityInterceptor = ConnectivityInterceptorImpl(context!!)
-            val apiService = NewsFeedApiService(connectivityInterceptor)
-            val feedDataSource = FeedDataSourceImpl(apiService)
-            val db = NewsFeedDatabase.invoke(context!!)
-            val topStoryRepository  = TopStoryRepositoryImpl(db.topStoryDao(),feedDataSource)
 
-        val factory = HomeViewModelFactory(topStoryRepository,"home")
-        homeViewModel = ViewModelProvider(this,factory).get(HomeViewModel::class.java)
-
-        bindUi()
+        val sectionsPagerAdapter = SectionsPagerAdapter(context!!, childFragmentManager)
+        val viewPager: ViewPager = view.findViewById(R.id.view_pager)
+        viewPager.adapter = sectionsPagerAdapter
+        val tabs: TabLayout = view.findViewById(R.id.tabs)
+        tabs.setupWithViewPager(viewPager)
     }
 
-    private fun bindUi() = launch {
-        val topStory = homeViewModel.topStory.await()
-
-        topStory.observe(this@HomeFragment, Observer {
-            if (it == null) return@Observer
-
-            //text_home.text = it.toString()
-            group_loading.visibility = View.GONE
-
-            //initRecyclerView(it.results)
-            recyclerAdapter.updateFeed(it.results)
-
-
-        })
-    }
 
 //    private fun List<Result>.toFutureWeatherItems() : List<Result> {
 //        return this.map {

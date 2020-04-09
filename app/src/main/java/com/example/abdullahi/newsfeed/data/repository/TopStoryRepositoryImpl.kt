@@ -46,11 +46,20 @@ class TopStoryRepositoryImpl(
     override suspend fun getCategoryTopStory(sectionName: String) : LiveData<out TopStoryResponse>{
         return withContext(Dispatchers.IO){
             initFetchedStory(sectionName)
-            val feedId = getId(sectionName)
+            var name = sectionName.substring(0,1).toUpperCase() + sectionName.substring(1)
+            if(sectionName == "home"){
+                name = "home"
+            }
+            val feedId = getId(name)
             return@withContext topStoryDao.getSectionFeed(feedId)
         }
     }
 
+    private fun capitalize(str : String) : String{
+        if (str == null || str.isEmpty()) return str
+
+        return str.substring(0,1).toUpperCase() + str.substring(1)
+    }
     private suspend fun initFetchedStory(sectionName: String){
         fetchTopStory(sectionName)
     }
@@ -65,19 +74,19 @@ class TopStoryRepositoryImpl(
                  1
             }
 
-            "business" -> {
+            "Business" -> {
                  2
             }
 
-            "entertainment" -> {
+            "Movies" -> {
                  3
             }
 
-            "sports" -> {
+            "Sports" -> {
                  4
             }
 
-            "science" -> {
+            "Science" -> {
                  5
             }
             else ->  0

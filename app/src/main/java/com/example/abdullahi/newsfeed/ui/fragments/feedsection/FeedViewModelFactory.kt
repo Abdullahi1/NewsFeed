@@ -1,15 +1,18 @@
-package com.example.abdullahi.newsfeed.ui.fragments.home
+package com.example.abdullahi.newsfeed.ui.fragments.feedsection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.abdullahi.newsfeed.data.repository.TopStoryRepository
 
-class HomeViewModelFactory(
+class FeedViewModelFactory(
     private val topStoryRepository: TopStoryRepository,
     private val sectionName : String
 ) : ViewModelProvider.NewInstanceFactory(){
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return HomeViewModel(topStoryRepository, sectionName) as T
+        return FeedViewModel(
+            topStoryRepository,
+            sectionName
+        ) as T
     }
 }
