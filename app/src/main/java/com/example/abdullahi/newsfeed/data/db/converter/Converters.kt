@@ -1,8 +1,8 @@
 package com.example.abdullahi.newsfeed.data.db.converter
 
 import androidx.room.TypeConverter
-import com.example.abdullahi.newsfeed.utils.Multimedia
-import com.example.abdullahi.newsfeed.utils.Result
+import com.example.abdullahi.newsfeed.data.db.entity.Multimedia
+import com.example.abdullahi.newsfeed.data.db.entity.Result
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*

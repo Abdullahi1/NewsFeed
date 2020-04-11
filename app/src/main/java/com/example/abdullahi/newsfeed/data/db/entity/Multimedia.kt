@@ -1,4 +1,6 @@
-package com.example.abdullahi.newsfeed.utils
+package com.example.abdullahi.newsfeed.data.db.entity
+
+import java.io.Serializable
 
 
 data class Multimedia(
@@ -10,4 +12,4 @@ data class Multimedia(
     val type: String,
     val url: String,
     val width: Int
-)
+):Serializable

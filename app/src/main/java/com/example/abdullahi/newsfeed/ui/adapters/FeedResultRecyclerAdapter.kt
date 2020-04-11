@@ -1,6 +1,7 @@
 package com.example.abdullahi.newsfeed.ui.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.abdullahi.newsfeed.R
 import com.example.abdullahi.newsfeed.internal.glide.GlideApp
-import com.example.abdullahi.newsfeed.utils.Result
+import com.example.abdullahi.newsfeed.data.db.entity.Result
+import com.example.abdullahi.newsfeed.ui.activities.TopStoryDetailsActivity
 import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.github.marlonlom.utilities.timeago.TimeAgoMessages
 import java.text.SimpleDateFormat
@@ -42,7 +44,10 @@ class FeedResultRecyclerAdapter (
         holder.newsTimeStamp.text = updateFeedTime(result.publishedDate)
 
         holder.itemView.setOnClickListener {
-            Toast.makeText(it.context,result.content,Toast.LENGTH_SHORT).show()
+            //Toast.makeText(it.context,result.content,Toast.LENGTH_SHORT).show()
+            val intent  = Intent(context,TopStoryDetailsActivity::class.java)
+            intent.putExtra("ARG_RESULT_RESPONSE",result)
+            context.startActivity(intent)
         }
 
     }

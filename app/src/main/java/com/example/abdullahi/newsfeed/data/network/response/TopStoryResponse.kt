@@ -3,7 +3,7 @@ package com.example.abdullahi.newsfeed.data.network.response
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.abdullahi.newsfeed.utils.Result
+import com.example.abdullahi.newsfeed.data.db.entity.Result
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "top_story_news_feed")

@@ -1,7 +1,8 @@
-package com.example.abdullahi.newsfeed.utils
+package com.example.abdullahi.newsfeed.data.db.entity
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Result(
     val `abstract`: String,
@@ -34,4 +35,4 @@ data class Result(
     val uri: String,
     val url: String,
     var content : String
-)
+):Serializable

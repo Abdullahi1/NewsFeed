@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.abdullahi.newsfeed.data.dao.TopStoryDao
 import com.example.abdullahi.newsfeed.data.network.datasource.FeedDataSource
 import com.example.abdullahi.newsfeed.data.network.response.TopStoryResponse
-import com.example.abdullahi.newsfeed.utils.Result
+import com.example.abdullahi.newsfeed.data.db.entity.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

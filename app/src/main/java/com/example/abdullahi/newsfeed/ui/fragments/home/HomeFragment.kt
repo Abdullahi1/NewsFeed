@@ -24,6 +24,10 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : ScopedFragment() {
 
+    override fun onResume() {
+        super.onResume()
+        activity?.title = "Home"
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

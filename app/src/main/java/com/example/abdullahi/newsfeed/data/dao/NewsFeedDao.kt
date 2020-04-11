@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.abdullahi.newsfeed.data.network.response.TopStoryResponse
-import com.example.abdullahi.newsfeed.utils.Result
 
 @Dao
 interface TopStoryDao{
