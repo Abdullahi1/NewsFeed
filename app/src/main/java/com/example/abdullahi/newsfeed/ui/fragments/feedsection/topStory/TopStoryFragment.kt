@@ -14,15 +14,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.abdullahi.newsfeed.R
 import com.example.abdullahi.newsfeed.data.NewsFeedApiService
 import com.example.abdullahi.newsfeed.data.dao.NewsFeedDatabase
+import com.example.abdullahi.newsfeed.data.network.datasource.FeedDataSource
 import com.example.abdullahi.newsfeed.data.network.datasource.FeedDataSourceImpl
+import com.example.abdullahi.newsfeed.data.network.interceptor.ConnectivityInterceptor
 import com.example.abdullahi.newsfeed.data.network.interceptor.ConnectivityInterceptorImpl
+import com.example.abdullahi.newsfeed.data.repository.TopStoryRepository
 import com.example.abdullahi.newsfeed.data.repository.TopStoryRepositoryImpl
+import com.example.abdullahi.newsfeed.di.ContextModule
+import com.example.abdullahi.newsfeed.di.DaggerAppComponent
 import com.example.abdullahi.newsfeed.ui.adapters.FeedResultRecyclerAdapter
 import com.example.abdullahi.newsfeed.ui.base.ScopedFragment
 import com.example.abdullahi.newsfeed.ui.fragments.feedsection.FeedViewModel
 import com.example.abdullahi.newsfeed.ui.fragments.feedsection.FeedViewModelFactory
 import kotlinx.android.synthetic.main.fragment_top_story.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,6 +43,16 @@ class TopStoryFragment : ScopedFragment() {
 
     private lateinit var feedViewModel: FeedViewModel
     private lateinit var recyclerAdapter : FeedResultRecyclerAdapter
+
+//    @Inject lateinit var  connectivityInterceptor : ConnectivityInterceptor
+//    @Inject lateinit var apiService : NewsFeedApiService
+//    @Inject lateinit var feedDataSource : FeedDataSource
+//    @Inject lateinit var db : NewsFeedDatabase
+    @Inject lateinit var topStoryRepository  : TopStoryRepository
+
+    init {
+//        DaggerAppComponent.builder().contextModule(ContextModule(context!!)).build().inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,11 +70,7 @@ class TopStoryFragment : ScopedFragment() {
         )
         recyclerView.layoutManager = LinearLayoutManager(context!!)
         recyclerView.adapter = recyclerAdapter
-        val connectivityInterceptor = ConnectivityInterceptorImpl(context!!)
-        val apiService = NewsFeedApiService(connectivityInterceptor)
-        val feedDataSource = FeedDataSourceImpl(apiService)
-        val db = NewsFeedDatabase.invoke(context!!)
-        val topStoryRepository  = TopStoryRepositoryImpl(db.topStoryDao(),feedDataSource)
+
 
         val factory = FeedViewModelFactory(
             topStoryRepository,
@@ -85,6 +97,10 @@ class TopStoryFragment : ScopedFragment() {
         })
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        DaggerAppComponent.builder().contextModule(ContextModule(context)).build().inject(this)
+    }
 
 
     companion object {
