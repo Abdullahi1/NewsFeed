@@ -16,20 +16,20 @@ abstract class NewsFeedDatabase : RoomDatabase() {
 
     abstract fun topStoryDao() : TopStoryDao
 
-    companion object{
-        private var instance : NewsFeedDatabase? = null
-
-        private val LOCK = Any()
-
-        operator fun invoke(context: Context)= instance ?: synchronized(LOCK){
-            instance ?: buildDatabase(context).also {
-                instance = it
-            }
-        }
-
-        private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext,
-                NewsFeedDatabase::class.java, "newsFeedContainer.db")
-                .build()
-    }
+//    companion object{
+//        private var instance : NewsFeedDatabase? = null
+//
+//        private val LOCK = Any()
+//
+//        operator fun invoke(context: Context)= instance ?: synchronized(LOCK){
+//            instance ?: buildDatabase(context).also {
+//                instance = it
+//            }
+//        }
+//
+//        private fun buildDatabase(context: Context) =
+//            Room.databaseBuilder(context.applicationContext,
+//                NewsFeedDatabase::class.java, "newsFeedContainer.db")
+//                .build()
+//    }
 }

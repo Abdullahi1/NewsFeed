@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsfeed.newsfeed.R
+import com.example.newsfeed.R
 import com.example.newsfeed.internal.glide.GlideApp
 import com.example.newsfeed.data.db.entity.Result
 import com.example.newsfeed.ui.activities.TopStoryDetailsActivity
 import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.github.marlonlom.utilities.timeago.TimeAgoMessages
-import kotlinx.android.synthetic.main.layout_single_news.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -76,13 +75,8 @@ class FeedResultRecyclerAdapter (
         notifyDataSetChanged()
     }
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val newsImage : ImageView
-        val newsHeadline : TextView
-        val newsTimeStamp : TextView
-        init {
-            newsImage = itemView.newsImage
-            newsHeadline = itemView.newsHeadline
-            newsTimeStamp = itemView.timeStamp
-        }
+        val newsImage : ImageView = itemView.findViewById(R.id.newsImage)
+        val newsHeadline : TextView = itemView.findViewById(R.id.newsHeadline)
+        val newsTimeStamp : TextView = itemView.findViewById(R.id.timeStamp)
     }
 }

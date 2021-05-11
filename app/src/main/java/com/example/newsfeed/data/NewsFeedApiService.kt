@@ -32,7 +32,7 @@ interface NewsFeedApiService {
             val requestInterceptor = Interceptor{chainInterceptor->
 
                 val url = chainInterceptor.request()
-                    .url()
+                    .url
                     .newBuilder()
                     .addQueryParameter("api-key", API_KEY)
                     .build()
