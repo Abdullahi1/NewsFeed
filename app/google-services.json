@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1049996338847",
+    "project_id": "newsfeed-e4707",
+    "storage_bucket": "newsfeed-e4707.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049996338847:android:03ff8154de779d0fc2a4aa",
+        "android_client_info": {
+          "package_name": "com.example.newsfeed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1049996338847-ekejem8v48ljoh7bhqb4o6vktaknh0ed.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXVs6lyyy1U1vIsSVg2LjNiAjLNEYpjnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1049996338847-ekejem8v48ljoh7bhqb4o6vktaknh0ed.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
