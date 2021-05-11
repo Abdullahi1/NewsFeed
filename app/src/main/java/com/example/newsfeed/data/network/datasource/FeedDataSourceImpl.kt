@@ -6,8 +6,9 @@ import com.example.newsfeed.data.NewsFeedApiService
 import com.example.newsfeed.data.network.response.TopStoryResponse
 import com.example.newsfeed.internal.NoConnectivityException
 import timber.log.Timber
+import javax.inject.Inject
 
-class FeedDataSourceImpl(
+class FeedDataSourceImpl @Inject constructor(
     private val newsFeedApiService : NewsFeedApiService
 ) : FeedDataSource {
 

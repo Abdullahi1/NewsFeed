@@ -11,15 +11,16 @@ import android.webkit.SslErrorHandler
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.example.newsfeed.newsfeed.R
 import com.example.newsfeed.data.db.entity.Result
-import kotlinx.android.synthetic.main.activity_top_story_details.*
+import com.example.newsfeed.databinding.ActivityTopStoryDetailsBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
+@AndroidEntryPoint
 class TopStoryDetailsActivity : AppCompatActivity(), CoroutineScope {
 
     private lateinit var resultResponse : Result
@@ -28,9 +29,12 @@ class TopStoryDetailsActivity : AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
+    private lateinit var binding: ActivityTopStoryDetailsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_top_story_details)
+        binding = ActivityTopStoryDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         job = Job()
 
         resultResponse = intent.getSerializableExtra("ARG_RESULT_RESPONSE") as Result
@@ -43,12 +47,12 @@ class TopStoryDetailsActivity : AppCompatActivity(), CoroutineScope {
 
     private fun loadStoryUrl(resultResponse: Result) = launch {
 
-        webview.settings.javaScriptEnabled = true
-        webview.settings.loadsImagesAutomatically = true
-        webview.settings.loadWithOverviewMode = true
-        webview.settings.useWideViewPort = true
+        binding.webview.settings.javaScriptEnabled = true
+        binding.webview.settings.loadsImagesAutomatically = true
+        binding.webview.settings.loadWithOverviewMode = true
+        binding.webview.settings.useWideViewPort = true
 
-        webview.webViewClient = object : WebViewClient() {
+        binding.webview.webViewClient = object : WebViewClient() {
 
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             override fun shouldOverrideUrlLoading(
@@ -68,7 +72,7 @@ class TopStoryDetailsActivity : AppCompatActivity(), CoroutineScope {
 
             override fun onPageFinished(view: WebView, url: String) {
                 //super.onPageFinished(view, url);
-                progressBar.visibility = View.INVISIBLE
+                binding.progressBar.visibility = View.INVISIBLE
             }
 
             override fun onReceivedSslError(
@@ -80,7 +84,7 @@ class TopStoryDetailsActivity : AppCompatActivity(), CoroutineScope {
             }
         }
 
-            webview.loadUrl(resultResponse.url)
+            binding.webview.loadUrl(resultResponse.url)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

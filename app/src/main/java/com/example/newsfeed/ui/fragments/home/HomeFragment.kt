@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
-import com.example.newsfeed.newsfeed.R
+import com.example.newsfeed.R
 import com.example.newsfeed.ui.base.ScopedFragment
 import com.google.android.material.tabs.TabLayout
 
@@ -43,7 +43,7 @@ class HomeFragment : ScopedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(context!!, childFragmentManager)
+        val sectionsPagerAdapter = SectionsPagerAdapter(requireContext(), childFragmentManager)
         val viewPager: ViewPager = view.findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = view.findViewById(R.id.tabs)

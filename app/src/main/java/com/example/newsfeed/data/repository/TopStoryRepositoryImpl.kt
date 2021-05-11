@@ -10,10 +10,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
+import javax.inject.Inject
 
 
-
-class TopStoryRepositoryImpl(
+class TopStoryRepositoryImpl @Inject constructor(
     private val topStoryDao: TopStoryDao,
     private val feedDataSource: FeedDataSource
 ) : TopStoryRepository {

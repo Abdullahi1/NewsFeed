@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.example.newsfeed.newsfeed.R
+import com.example.newsfeed.R
 import com.example.newsfeed.ui.base.ScopedFragment
-import kotlinx.android.synthetic.main.top_story_detail_fragment.*
 import android.net.http.SslError
 import android.webkit.SslErrorHandler
 import android.webkit.WebView
@@ -17,8 +16,11 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.webkit.WebViewClient
 import com.example.newsfeed.data.db.entity.Result
+import com.example.newsfeed.databinding.TopStoryDetailFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class TopStoryDetail : ScopedFragment() {
     private var listener: OnFragmentInteractionListener? = null
 
@@ -26,6 +28,8 @@ class TopStoryDetail : ScopedFragment() {
     private lateinit var viewModel: TopStoryDetailViewModel
 
     private lateinit var resultResponse: Result
+
+    private lateinit var binding: TopStoryDetailFragmentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +43,9 @@ class TopStoryDetail : ScopedFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.top_story_detail_fragment, container, false)
+    ): View {
+        binding = TopStoryDetailFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -52,12 +57,12 @@ class TopStoryDetail : ScopedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        webview.settings.javaScriptEnabled = true
-        webview.settings.loadsImagesAutomatically = true
-        webview.settings.loadWithOverviewMode = true
-        webview.settings.useWideViewPort = true
+        binding.webview.settings.javaScriptEnabled = true
+        binding.webview.settings.loadsImagesAutomatically = true
+        binding.webview.settings.loadWithOverviewMode = true
+        binding.webview.settings.useWideViewPort = true
 
-        webview.webViewClient = object : WebViewClient() {
+        binding.webview.webViewClient = object : WebViewClient() {
 
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             override fun shouldOverrideUrlLoading(
@@ -77,7 +82,7 @@ class TopStoryDetail : ScopedFragment() {
 
             override fun onPageFinished(view: WebView, url: String) {
                 //super.onPageFinished(view, url);
-                progressBar.visibility = View.INVISIBLE
+                binding.progressBar.visibility = View.INVISIBLE
             }
 
             override fun onReceivedSslError(
@@ -90,7 +95,7 @@ class TopStoryDetail : ScopedFragment() {
         }
 
         if (resultResponse != null) {
-            webview.loadUrl(resultResponse.url)
+            binding.webview.loadUrl(resultResponse.url)
         }
     }
 

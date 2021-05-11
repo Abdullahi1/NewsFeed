@@ -1,6 +1,5 @@
 package com.example.newsfeed.ui.fragments.feedsection.topStory
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +7,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-
-import com.example.newsfeed.newsfeed.R
 import com.example.newsfeed.data.repository.TopStoryRepository
-import com.example.newsfeed.di.ContextModule
-import com.example.newsfeed.di.DaggerAppComponent
+import com.example.newsfeed.databinding.FragmentTopStoryBinding
 import com.example.newsfeed.ui.adapters.FeedResultRecyclerAdapter
 import com.example.newsfeed.ui.base.ScopedFragment
 import com.example.newsfeed.ui.fragments.feedsection.FeedViewModel
 import com.example.newsfeed.ui.fragments.feedsection.FeedViewModelFactory
-import kotlinx.android.synthetic.main.fragment_top_story.*
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,48 +22,44 @@ import javax.inject.Inject
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-
+@AndroidEntryPoint
 class TopStoryFragment : ScopedFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     private lateinit var feedViewModel: FeedViewModel
-    private lateinit var recyclerAdapter : FeedResultRecyclerAdapter
+    private lateinit var recyclerAdapter: FeedResultRecyclerAdapter
 
-//    @Inject lateinit var  connectivityInterceptor : ConnectivityInterceptor
-//    @Inject lateinit var apiService : NewsFeedApiService
-//    @Inject lateinit var feedDataSource : FeedDataSource
-//    @Inject lateinit var db : NewsFeedDatabase
-    @Inject lateinit var topStoryRepository  : TopStoryRepository
+    @Inject
+    lateinit var topStoryRepository: TopStoryRepository
+    private lateinit var binding: FragmentTopStoryBinding
 
-    init {
-//        DaggerAppComponent.builder().contextModule(ContextModule(context!!)).build().inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_top_story, container, false)
+        binding = FragmentTopStoryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerAdapter = FeedResultRecyclerAdapter(
             listOf(),
-            context!!
+            requireContext()
         )
-        recyclerView.layoutManager = LinearLayoutManager(context!!)
-        recyclerView.adapter = recyclerAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = recyclerAdapter
 
 
         val factory = FeedViewModelFactory(
             topStoryRepository,
             "home"
         )
-        feedViewModel = ViewModelProvider(this,factory).get(FeedViewModel::class.java)
+        feedViewModel = ViewModelProvider(this, factory).get(FeedViewModel::class.java)
 
         bindUi()
     }
@@ -75,22 +67,17 @@ class TopStoryFragment : ScopedFragment() {
     private fun bindUi() = launch {
         val topStory = feedViewModel.topStory.await()
 
-        topStory.observe(this@TopStoryFragment, Observer {
+        topStory.observe(viewLifecycleOwner, Observer {
             if (it == null) return@Observer
 
             //text_home.text = it.toString()
-            group_loading.visibility = View.GONE
+            binding.groupLoading.visibility = View.GONE
 
             //initRecyclerView(it.results)
             recyclerAdapter.updateFeed(it.results)
 
 
         })
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        DaggerAppComponent.builder().contextModule(ContextModule(context)).build().inject(this)
     }
 
 

@@ -3,11 +3,13 @@ package com.example.newsfeed.data.network.interceptor
 import android.content.Context
 import android.net.ConnectivityManager
 import com.example.newsfeed.internal.NoConnectivityException
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
 
-class ConnectivityInterceptorImpl(
-    context: Context
+class ConnectivityInterceptorImpl @Inject constructor(
+    @ApplicationContext context: Context
 ) : ConnectivityInterceptor {
 
     private val appContext = context.applicationContext

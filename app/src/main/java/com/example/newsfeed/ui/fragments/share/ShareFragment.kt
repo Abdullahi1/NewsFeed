@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.example.newsfeed.newsfeed.R
+import com.example.newsfeed.R
 
 class ShareFragment : Fragment() {
 
@@ -19,13 +17,13 @@ class ShareFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        shareViewModel =
-            ViewModelProviders.of(this).get(ShareViewModel::class.java)
+//        shareViewModel =
+//            ViewModelProviders.of(this).get(ShareViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_share, container, false)
         val textView: TextView = root.findViewById(R.id.text_share)
-        shareViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
+//        shareViewModel.text.observe(this, Observer {
+//            textView.text = it
+//        })
         return root
     }
 }
